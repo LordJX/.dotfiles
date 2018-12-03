@@ -82,6 +82,7 @@ set smartcase
 
 " Highlight search results
 set hlsearch
+map <C-n> :nohl<cr>
 
 " Makes search act like search in modern browsers
 set incsearch 
@@ -122,12 +123,12 @@ augroup END
 " Enable syntax highlighting
 syntax enable 
 
-set background=light
+set background=dark
 
 " Set vim color scheme 
 try
-    "colorscheme solarized
-    colorscheme pencil
+    colorscheme solarized
+    "colorscheme pencil
 catch
 endtry
 
@@ -230,7 +231,6 @@ map <leader>t<leader> :tabnext
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
-
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
