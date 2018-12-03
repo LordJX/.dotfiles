@@ -122,11 +122,12 @@ augroup END
 " Enable syntax highlighting
 syntax enable 
 
-set background=dark
+set background=light
 
 " Set vim color scheme 
 try
-    colorscheme solarized
+    "colorscheme solarized
+    colorscheme pencil
 catch
 endtry
 

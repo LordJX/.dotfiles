@@ -10,8 +10,8 @@ call plug#begin('~/.vim/custom')
 " solarized theme, https://github.com/altercation/vim-colors-solarized
 Plug 'altercation/vim-colors-solarized'
 
-" gruvbox theme, https://github.com/morhetz/gruvbox.git
-" Plug 'morhetz/gruvbox'
+" pencil theme, https://github.com/reedes/vim-pencil
+Plug 'reedes/vim-pencil'
 
 " lightline, https://github.com/itchyny/lightline.vim
 Plug 'itchyny/lightline.vim'
