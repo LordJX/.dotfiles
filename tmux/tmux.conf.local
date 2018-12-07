@@ -1,7 +1,7 @@
-# -- navigation -------------------------------------------------------
+# -- navigation ---------------------------------------------
 
 
-# -- windows & pane creation ------------------------------------------
+# -- windows & pane creation --------------------------------
 
 # new window retains current path, possible values are:
 #   - true
@@ -24,7 +24,7 @@ tmux_conf_new_pane_reconnect_ssh=false
 tmux_conf_new_session_prompt=false
 
 
-# -- display ------------------------------------------------------------
+# -- display -------------------------------------------------
 
 # RGB 24-bit colour support (tmux >= 2.2), possible values are:
 #  - true
@@ -246,7 +246,7 @@ tmux_conf_theme_clock_colour='#00afff'  # light blue
 tmux_conf_theme_clock_style='24'
 
 
-# -- clipboard ----------------------------------------------------------
+# -- clipboard ------------------------------------------------
 
 # in copy mode, copying selection also copies to the OS clipboard
 #   - true
@@ -256,7 +256,7 @@ tmux_conf_theme_clock_style='24'
 tmux_conf_copy_to_os_clipboard=false
 
 
-# -- user customizations -------------------------------------------------
+# -- user customizations --------------------------------------
 # this is the place to override or undo settings
 
 # increase history size

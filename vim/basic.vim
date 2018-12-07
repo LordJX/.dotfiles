@@ -264,13 +264,13 @@ let g:lightline = {
     \ 'colorscheme': 'solarized',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified', 'spell', 'syntastic' ] ],
+    \             [ 'fugitive', 'readonly', 'filename', 'modified', 'spell' ] ],
     \   'right': [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
     \ },
     \ 'component': {
-    \   'lineinfo': ' %3l:%-2v',
-    \   'spell': '%{ &spell ? &spelllang : "no spell" }',
-    \   'modified': '%{ &filetype=="help" ? "" : &modified ? "+" : &modifiable ? "" : "-" }',
+    \   'lineinfo': '%l:%-2v',
+    \   'spell': '%{ &spell ? &spelllang : "" }',
+    \   'modified': '%{ &filetype=="help" ? "" : &modified ? "\uf8ea" : &modifiable ? "" : "\uf8ed" }',
     \ },
     \ 'component_visible_condition': {
     \   'readonly': '(&filetype != "help" && &readonly)',
@@ -279,13 +279,12 @@ let g:lightline = {
     \ 'component_function': {
     \   'readonly': 'LightlineReadonly',
     \   'fugitive': 'LightlineFugitive',
+    \   'fileformat': 'LightlineFileformat',
+    \   'filetype': 'LightlineFiletype',
+    \	'fileencoding': 'LightlineFileencoding'
     \ },
-    \ 'component_expand': {
-    \   'syntastic': 'SyntasticStatuslineFlag',
-    \ },
-    \ 'component_type': {
-    \   'syntastic': 'error',
-    \ }
+    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0ba" },
+	\ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bb" }
 \ }
 
 function! LightlineReadonly()
@@ -305,12 +304,24 @@ function! LightlineFugitive() abort
         else
             return ''
         endif
-        let b:lightline_fugitive = head
+        let b:lightline_fugitive = head !=# '' ? "\ue0a0 ".head : ''
         let b:lightline_fugitive_ = reltime()
         return b:lightline_fugitive
     catch
     endtry
     return ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 80 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 
