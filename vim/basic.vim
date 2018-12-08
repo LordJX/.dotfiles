@@ -194,6 +194,16 @@ set wrap "Wrap lines
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
+" toggle background and update lightline color scheme
+function! ToggleSolarizedTheme()
+  let &background = ( &background == "dark"? "light" : "dark" )
+  if exists("g:lightline")
+      call s:lightline_update()
+  endif
+endfunction
+
+" map F2 to ToggleSolarizedTheme() function
+map <F2> :call ToggleSolarizedTheme()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => 06. Moving around, tabs, windows and buffers
@@ -348,6 +358,26 @@ endfunction
 function! LightlineTabModified(n) abort
     let winnr = tabpagewinnr(a:n)
     return gettabwinvar(a:n, winnr, '&modified') ? "\uf8ea" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\uf8ed"
+endfunction
+
+" update lightline theme on fly
+augroup LightLineColorscheme
+  autocmd!
+  autocmd ColorScheme * call s:lightline_update()
+augroup END
+function! s:lightline_update()
+  if !exists('g:loaded_lightline')
+    return
+  endif
+  try
+    if g:colors_name =~# 'solarized\|pencil'
+      let g:lightline.colorscheme = substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
+      call lightline#init()
+      call lightline#colorscheme()
+      call lightline#update()
+    endif
+  catch
+  endtry
 endfunction
 
 
