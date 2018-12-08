@@ -13,6 +13,9 @@ Plug 'altercation/vim-colors-solarized'
 " pencil theme, https://github.com/reedes/vim-colors-pencil
 Plug 'reedes/vim-colors-pencil'
 
+" gruvbox, https://github.com/morhetz/gruvbox
+Plug 'morhetz/gruvbox'
+
 " lightline, https://github.com/itchyny/lightline.vim
 Plug 'itchyny/lightline.vim'
 

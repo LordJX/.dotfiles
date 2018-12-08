@@ -370,7 +370,7 @@ function! s:lightline_update()
     return
   endif
   try
-    if g:colors_name =~# 'solarized\|pencil'
+    if g:colors_name =~# 'solarized\|pencil\|gruvbox'
       let g:lightline.colorscheme = substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
       call lightline#init()
       call lightline#colorscheme()

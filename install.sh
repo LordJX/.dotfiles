@@ -16,6 +16,7 @@ echo ""
 
 # ------ iterm2 configuration ----------------------------------
 tic ~/Documents/dotfiles/iterm2/xterm-256color-italic.terminfo
+tic ~/Documents/dotfiles/iterm2/tmux.terminfo
 echo "Xterm-256-intalic Configuration Done!"
 echo ""
 
