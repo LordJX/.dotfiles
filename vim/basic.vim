@@ -263,9 +263,16 @@ set noshowmode
 let g:lightline = {
     \ 'colorscheme': 'solarized',
     \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified', 'spell' ] ],
-    \   'right': [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \   'left':  [ [ 'mode', 'paste' ],
+    \        [ 'fugitive', 'readonly', 'filename', 'modified', 'spell' ] ],
+    \   'right': [ [ 'lineinfo' ], 
+    \              ['percent'], 
+    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \ },
+    \ 'inactive': {
+    \   'left':  [ [ 'filename' ] ],
+    \   'right': [ [ 'lineinfo' ],
+    \              [ 'percent' ] ] 
     \ },
     \ 'component': {
     \   'lineinfo': '%l:%-2v',
@@ -283,8 +290,22 @@ let g:lightline = {
     \   'filetype': 'LightlineFiletype',
     \	'fileencoding': 'LightlineFileencoding'
     \ },
-    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0ba" },
-	\ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bb" }
+    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+	\ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
+    \ 'tabline': {
+    \   'left':  [ [ 'tabs' ] ],
+    \   'right': [ [ 'close' ] ] 
+    \ },
+    \ 'tab': {
+    \   'active':   [ 'tabnum', 'filename', 'modified' ],
+    \   'inactive': [ 'tabnum', 'filename', 'modified' ] 
+    \ },
+    \ 'tab_component': {},
+    \ 'tab_component_function': {
+    \   'modified': 'LightlineTabModified'
+    \ },
+    \ 'tabline_separator': { 'left': "", 'right': "" },
+	\ 'tabline_subseparator': { 'left': "|", 'right': "|" }
 \ }
 
 function! LightlineReadonly()
@@ -322,6 +343,11 @@ endfunction
 
 function! LightlineFileencoding()
   return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineTabModified(n) abort
+    let winnr = tabpagewinnr(a:n)
+    return gettabwinvar(a:n, winnr, '&modified') ? "\uf8ea" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\uf8ed"
 endfunction
 
 
