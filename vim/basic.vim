@@ -127,9 +127,7 @@ set background=dark
 
 " Set vim color scheme 
 try
-    colorscheme solarized
-    "colorscheme pencil
-catch
+    colorscheme gruvbox
 endtry
 
 " Set extra options when running in GUI mode
@@ -195,15 +193,15 @@ vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 " toggle background and update lightline color scheme
-function! ToggleSolarizedTheme()
+function! ToggleBackground()
   let &background = ( &background == "dark"? "light" : "dark" )
   if exists("g:lightline")
       call s:lightline_update()
   endif
 endfunction
 
-" map F2 to ToggleSolarizedTheme() function
-map <F2> :call ToggleSolarizedTheme()<CR>
+" map F2 to ToggleBackground() function
+map <F2> :call ToggleBackground()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => 06. Moving around, tabs, windows and buffers
@@ -271,7 +269,7 @@ set noshowmode
 
 " Enable and setup lightline
 let g:lightline = {
-    \ 'colorscheme': 'solarized',
+    \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \   'left':  [ [ 'mode', 'paste' ],
     \        [ 'fugitive', 'readonly', 'filename', 'modified', 'spell' ] ],
@@ -372,6 +370,7 @@ function! s:lightline_update()
   try
     if g:colors_name =~# 'solarized\|pencil\|gruvbox'
       let g:lightline.colorscheme = substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
+      runtime autoload/lightline/colorscheme/gruvbox.vim
       call lightline#init()
       call lightline#colorscheme()
       call lightline#update()
@@ -393,8 +392,8 @@ map <Right> <Nop>
 map <Up>    <Nop>
 map <Down>  <Nop>
 
-" Enable jk to exit insert mode
-imap jk <Esc>
+" Enable jj to exit insert mode
+imap jj <Esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

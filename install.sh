@@ -1,66 +1,53 @@
 #!/bin/sh
 set -e
 
+export DOTFILE_HOME="$HOME/.dotfiles"
+
 # ------ install fonts -----------------------------------------
-cp -R $HOME/Documents/dotfiles/fonts/SourceCodePro~/Library/Fonts/
-echo "Fonts Installed!"
-echo ""
+cp -R $DOTFILE_HOME/fonts/SourceCodePro $HOME/Library/Fonts/
+echo -e "Nerd Fonts Installed!\n"
 
 # ------ git configuration -------------------------------------
-mkdir ~/.dotfiles
-ln -s ~/Documents/dotfiles/git/gitconfig ~/.dotfiles/gitconfig
-ln -s ~/Documents/dotfiles/git/gitignore ~/.dotfiles/gitignore
-ln -s .dotfiles/gitconfig ~/.gitconfig
-echo "Git Configuration Done!"
-echo ""
+ln -s $DOTFILE_HOME/git/gitconfig $HOME/.gitconfig
+echo -e "Git Configuration Done!\n"
 
 # ------ iterm2 configuration ----------------------------------
-tic ~/Documents/dotfiles/iterm2/xterm-256color-italic.terminfo
-tic ~/Documents/dotfiles/iterm2/tmux.terminfo
-echo "Xterm-256-intalic Configuration Done!"
-echo ""
+tic $DOTFILE_HOME/iterm2/xterm-256color-italic.terminfo
+tic $DOTFILE_HOME/iterm2/tmux.terminfo
+echo -e "Xterm-256-intalic Configuration Done!\n"
 
 # ------ oh-my-zsh environment ---------------------------------
-ln -s ~/Documents/dotfiles/omzsh/profile.zsh ~/.oh-my-zsh/custom/profile.zsh
-ln -s ~/Documents/dotfiles/omzsh/pyvenvwrapper.zsh ~/.oh-my-zsh/custom/pyvenvwrapper.zsh
-echo "oh-my-zsh Configuration Done!"
-echo ""
+ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
+echo -e "oh-my-zsh Configuration Done!\n"
 
 # ------ tmux configuration  -----------------------------------
-ln -s ~/Documents/dotfiles/tmux/tmux.conf ~/.dotfiles/tmux.conf
-ln -s ~/Documents/dotfiles/tmux/tmux.conf.local ~/.dotfiles/tmux.conf.local
-ln -s .dotfiles/tmux.conf ~/.tmux.conf
-echo "Tmux Configuration Done!"
-echo ""
+ln -s $DOTFILE_HOME/tmux/tmux.conf $HOME/tmux.conf
+echo -e "Tmux Configuration Done!\n"
 
 # ------ vim environment ----------------------------------------
-# setup the vim directory tree
-mkdir -p ~/.vim/{autoload,vimrcs,custom,temp/undo}
+mkdir -p $HOME/.vim/{autoload,vimrcs,custom,temp/undo}
 
-# link vim configuration files
-ln -s ~/Documents/dotfiles/vim/basic.vim ~/.vim/vimrcs/basic.vim
-ln -s ~/Documents/dotfiles/vim/plugins.vim ~/.vim/vimrcs/plugins.vim
-ln -s ~/Documents/dotfiles/vim/custom.vim ~/.vim/vimrcs/custom.vim
+ln -s $DOTFILE_HOME/vim/basic.vim $HOME/.vim/vimrcs/basic.vim
+ln -s $DOTFILE_HOME/vim/plugins.vim $HOME/.vim/vimrcs/plugins.vim
+ln -s $DOTFILE_HOME/vim/custom.vim $HOME/.vim/vimrcs/custom.vim
 
-# install vim-plug plugins mangement
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# create .vimrc file
 echo "
 source ~/.vim/vimrcs/plugins.vim
 source ~/.vim/vimrcs/basic.vim
 source ~/.vim/vimrcs/custom.vim
 " > ~/.vim/vimrc
 
-echo ""
-echo "Vim configuration Done! 
-echo "Everythong setup successfully, Enjoy :-)"
+
+echo -e "Vim Configuration Done!\n" 
+echo -e "Dotfiles Configuration Installed Successfully!\n "
 
 # ------ manual configuration steps required -------------------
-echo "Below are some manual configuration required:"
-echo ""
-echo "1) Choose the theme and font for iterm2 you like."
-echo ""
-echo "2) Run vim PlugInstall command to install plugs."
-echo ""
+echo -e "Below are some manual configuration steps required:\n"
+
+echo -e "1) Choose the theme and font for iterm2 you like.\n"
+
+echo -e "2) Run vim PlugInstall command to install plugs.\n"
+
