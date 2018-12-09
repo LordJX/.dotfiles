@@ -11,17 +11,12 @@ echo -e "Nerd Fonts Installed!\n"
 ln -s $DOTFILE_HOME/git/gitconfig $HOME/.gitconfig
 echo -e "Git Configuration Done!\n"
 
-# ------ iterm2 configuration ----------------------------------
-tic $DOTFILE_HOME/iterm2/xterm-256color-italic.terminfo
-tic $DOTFILE_HOME/iterm2/tmux.terminfo
-echo -e "Xterm-256-intalic Configuration Done!\n"
-
 # ------ oh-my-zsh environment ---------------------------------
 ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
 echo -e "oh-my-zsh Configuration Done!\n"
 
 # ------ tmux configuration  -----------------------------------
-ln -s $DOTFILE_HOME/tmux/tmux.conf $HOME/tmux.conf
+ln -s $DOTFILE_HOME/tmux/tmux.conf $HOME/.tmux.conf
 echo -e "Tmux Configuration Done!\n"
 
 # ------ vim environment ----------------------------------------

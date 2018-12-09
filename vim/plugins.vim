@@ -7,13 +7,10 @@ call plug#begin('~/.vim/custom')
 
 " Make sure you use single quotes
 
-" solarized theme, https://github.com/altercation/vim-colors-solarized
-"Plug 'altercation/vim-colors-solarized'
+" solarized theme, https://github.com/altercation/solarized
+Plug 'altercation/vim-colors-solarized'
 
-" pencil theme, https://github.com/reedes/vim-colors-pencil
-"Plug 'reedes/vim-colors-pencil'
-
-" gruvbox, https://github.com/morhetz/gruvbox
+" gruvbox theme, https://github.com/morhetz/gruvbox
 Plug 'morhetz/gruvbox'
 
 " lightline, https://github.com/itchyny/lightline.vim

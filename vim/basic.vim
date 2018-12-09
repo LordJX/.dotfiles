@@ -127,7 +127,7 @@ set background=dark
 
 " Set vim color scheme 
 try
-    colorscheme gruvbox
+    colorscheme solarized
 endtry
 
 " Set extra options when running in GUI mode
@@ -195,6 +195,9 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " toggle background and update lightline color scheme
 function! ToggleBackground()
   let &background = ( &background == "dark"? "light" : "dark" )
+  if exists("g:colors_name")
+      exe "colorscheme " . g:colors_name
+  endif
   if exists("g:lightline")
       call s:lightline_update()
   endif
@@ -269,7 +272,7 @@ set noshowmode
 
 " Enable and setup lightline
 let g:lightline = {
-    \ 'colorscheme': 'gruvbox',
+    \ 'colorscheme': 'solarized',
     \ 'active': {
     \   'left':  [ [ 'mode', 'paste' ],
     \        [ 'fugitive', 'readonly', 'filename', 'modified', 'spell' ] ],
@@ -342,15 +345,15 @@ function! LightlineFugitive() abort
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 80 ? &fileformat : ''
+  return winwidth(0) > 100 ? &fileformat : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
+  return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
 endfunction
 
 function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 function! LightlineTabModified(n) abort
@@ -368,9 +371,14 @@ function! s:lightline_update()
     return
   endif
   try
-    if g:colors_name =~# 'solarized\|pencil\|gruvbox'
-      let g:lightline.colorscheme = substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
-      runtime autoload/lightline/colorscheme/gruvbox.vim
+    if g:colors_name =~# 'solarized\|gruvbox'
+      let g:lightline.colorscheme = substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '') 
+      if g:lightline.colorscheme ==# 'solarized'
+        runtime autoload/lightline/colorscheme/solarized.vim
+      endif
+      if g:lightline.colorscheme ==# 'gruvbox'
+        runtime autoload/lightline/colorscheme/gruvbox.vim
+      endif
       call lightline#init()
       call lightline#colorscheme()
       call lightline#update()
@@ -392,8 +400,8 @@ map <Right> <Nop>
 map <Up>    <Nop>
 map <Down>  <Nop>
 
-" Enable jj to exit insert mode
-imap jj <Esc>
+" Enable jk to exit insert mode
+imap jk <Esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -407,3 +415,4 @@ map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
