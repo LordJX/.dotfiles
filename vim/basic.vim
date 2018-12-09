@@ -123,13 +123,26 @@ augroup END
 " Enable syntax highlighting
 syntax enable 
 
-set background=dark
-
 " Set vim color scheme 
-"let g:solarized_termcolors=256
 try
     colorscheme solarized
 endtry
+
+" Enable italicised comments in vim
+"autocmd ColorScheme * highlight Comment cterm=italic
+
+set background=dark
+
+" toggle background and update lightline color scheme
+function! ToggleBackground()
+  let &background = ( &background == "dark"? "light" : "dark" )
+  if exists("g:colors_name")
+    exe "colorscheme " . g:colors_name
+  endif
+endfunction
+
+" map F2 to ToggleBackground() function
+map <F2> :call ToggleBackground()<CR>
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -144,9 +157,6 @@ set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
-
-" Enable italicised comments in vim
-highlight Comment cterm=italic
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -192,18 +202,6 @@ set wrap "Wrap lines
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-" toggle background and update lightline color scheme
-function! ToggleBackground()
-  let &background = ( &background == "dark"? "light" : "dark" )
-  if exists("g:colors_name")
-    exe "colorscheme " . g:colors_name
-  endif
-  highlight Comment cterm=italic
-endfunction
-
-" map F2 to ToggleBackground() function
-map <F2> :call ToggleBackground()<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
