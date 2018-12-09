@@ -126,6 +126,7 @@ syntax enable
 set background=dark
 
 " Set vim color scheme 
+"let g:solarized_termcolors=256
 try
     colorscheme solarized
 endtry
@@ -196,15 +197,14 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 function! ToggleBackground()
   let &background = ( &background == "dark"? "light" : "dark" )
   if exists("g:colors_name")
-      exe "colorscheme " . g:colors_name
+    exe "colorscheme " . g:colors_name
   endif
-  if exists("g:lightline")
-      call s:lightline_update()
-  endif
+  highlight Comment cterm=italic
 endfunction
 
 " map F2 to ToggleBackground() function
 map <F2> :call ToggleBackground()<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => 06. Moving around, tabs, windows and buffers
