@@ -19,4 +19,4 @@ rm $HOME/.oh-my-zsh/custom/profile.zsh
 rm $HOME/.tmux.conf
 
 # ------ vim environment ----------------------------------------
-rm -rf .vim
+rm -rf $HOME/.vim
