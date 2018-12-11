@@ -273,24 +273,24 @@ let g:lightline = {
 \ }
 
 function! LightlineFugitive() abort
-    if &filetype ==# 'help'
-        return ''
-    endif
-    if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
-        return b:lightline_fugitive
-    endif
-    try
-        if exists('*fugitive#head')
-            let head = fugitive#head()
-        else
-            return ''
-        endif
-        let b:lightline_fugitive = head !=# '' ? "\ue0a0 ".head : ''
-        let b:lightline_fugitive_ = reltime()
-        return b:lightline_fugitive
-    catch
-    endtry
+  if &filetype ==# 'help'
     return ''
+  endif
+  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
+    return b:lightline_fugitive
+  endif
+  try
+    if exists('*fugitive#head')
+      let head = fugitive#head()
+    else
+      return ''
+    endif
+    let b:lightline_fugitive = head !=# '' ? "\ue0a0 ".head : ''
+    let b:lightline_fugitive_ = reltime()
+    return b:lightline_fugitive
+  catch
+  endtry
+  return ''
 endfunction
 
 function! LightlineModified()
@@ -301,16 +301,35 @@ function! LightlineReadonly()
   return &ft !~? 'help' && &readonly ? "\ue0a2" : ''
 endfunction
 
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname =~ 'NERD_tree' ? 'NERDtree' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! LightlineNormalFile()
+  let fname = expand('%:t')
+  return ! (fname =~ 'NERD_tree')
+endfunction
+
 function! LightlineFilename()
   if winwidth(0) > 100 
     let fname = expand('%:F')
   else
     let fname = expand('%:t')
   endif
-  return  fname =~ 'NERD_tree' ? '' :
+  return ! (LightlineNormalFile()) ? '' :
         \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlinePercent()
+  return LightlineNormalFile() ? (100 * line('.') / line('$')) . '%' : ''
+endfunction
+
+function! LightlineLineinfo()
+  return LightlineNormalFile() ? printf("%d:%-2d", line('.'), col('.')) : ''
 endfunction
 
 function! LightlineFileformat()
@@ -325,25 +344,6 @@ function! LightlineFileencoding()
   return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
-function! LightlineMode()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree' ? 'NERDtree' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! LightlineNormalFile()
-  let fname = expand('%:t')
-  return ! (fname =~ 'NERD_tree')
-endfunction
-
-function! LightlinePercent()
-  return LightlineNormalFile() ? (100 * line('.') / line('$')) . '%' : ''
-endfunction
-
-function! LightlineLineinfo()
-  return LightlineNormalFile() ? printf("%d:%-2d", line('.'), col('.')) : ''
-endfunction
-
 function! TablineModified(n)
   let winnr = tabpagewinnr(a:n)
   return gettabwinvar(a:n, winnr, '&modified') ? "\uf8ea" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\uf8ed"
@@ -355,10 +355,10 @@ function! TablineReadonly(n)
 endfunction
 
 function! TablineFilename(n)
- let buflist = tabpagebuflist(a:n)
- let winnr = tabpagewinnr(a:n)
- let tname = expand('#'.buflist[winnr - 1].':t')
- return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let tname = expand('#'.buflist[winnr - 1].':t')
+  return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
 endfunction
 
 " update lightline theme on fly
