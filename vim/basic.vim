@@ -326,11 +326,11 @@ function! LightlinePosition()
 endfunction
 
 function! LightlinePercent()
-  return LightlineNormalFile() ? (100 * line('.') / line('$')) . '%' ." \uf0c9 " : ''
+  return LightlineNormalFile() ? printf("%3d%% \uf0c9", 100 * line('.') / line('$')) : ''
 endfunction
 
 function! LightlineLineinfo()
-  return LightlineNormalFile() ? printf("%3d/%3d \ue0a1 %2d", line('.'), line('$'), col('.')) : ''
+  return LightlineNormalFile() ? printf("%3d/%-3d \ue0a1 %2d", line('.'), line('$'), col('.')) : ''
 endfunction
 
 function! LightlineFiletype()
