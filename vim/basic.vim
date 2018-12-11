@@ -303,7 +303,7 @@ endfunction
 
 function! LightlineFilename()
   if winwidth(0) > 100 
-    let fname = expand('%:F')
+    let fname = expand('%:p')
   else
     let fname = expand('%:t')
   endif
