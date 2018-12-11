@@ -242,19 +242,16 @@ let g:lightline = {
     \ 'active': {
     \     'left':  [ [ 'mode', 'paste' ],
     \                [ 'fugitive', 'filename' ] ],
-    \     'right': [ [ 'lineinfo' ], 
-    \                ['percent'], 
-    \                [ 'filetype', 'fileencoding', 'fileformat' ] ]
+    \     'right': [ [ 'position' ], 
+    \                [ 'filetype', 'fileencoding' ] ]
     \ },
     \ 'component_function': {
     \     'filename':     'LightlineFilename',
-    \     'fileformat':   'LightlineFileformat',
     \     'filetype':     'LightlineFiletype',
-    \     'fileencoding': 'LightlineFileencoding',
+    \     'fileencoding': 'LightlineFileEncodingFormat',
     \     'mode':         'LightlineMode',
     \     'lineinfo':     'LightlineLineinfo',
-    \     'percent':      'LightlinePercent',
-    \     'readonly':     'LightlineReadonly',
+    \     'position':     'LightlinePosition',
     \     'modified':     'LightlineModified',
     \ },
     \ 'separator':    { 'left': "\ue0b8", 'right': "\ue0be" },
@@ -324,24 +321,32 @@ function! LightlineFilename()
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
+function! LightlinePosition()
+  return LightlinePercent() . ' ' . LightlineLineinfo()
+endfunction
+
 function! LightlinePercent()
-  return LightlineNormalFile() ? (100 * line('.') / line('$')) . '%' : ''
+  return LightlineNormalFile() ? (100 * line('.') / line('$')) . '%' ." \uf0c9 " : ''
 endfunction
 
 function! LightlineLineinfo()
-  return LightlineNormalFile() ? printf("%d:%-2d", line('.'), col('.')) : ''
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 80 ? &fileformat : ''
+  return LightlineNormalFile() ? printf("%3d/%3d \ue0a1 %2d", line('.'), line('$'), col('.')) : ''
 endfunction
 
 function! LightlineFiletype()
   return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
 endfunction
 
+function! LightlineFileEncodingFormat()
+  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) . '[' . &fileformat . ']' : ''
+endfunction
+
 function! LightlineFileencoding()
   return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 80 ? &fileformat : ''
 endfunction
 
 function! TablineModified(n)
