@@ -240,54 +240,37 @@ set noshowmode
 let g:lightline = {
     \ 'colorscheme': 'solarized',
     \ 'active': {
-    \   'left':  [ [ 'mode', 'paste' ],
-    \        [ 'fugitive', 'readonly', 'filename', 'modified', 'spell' ] ],
-    \   'right': [ [ 'lineinfo' ], 
-    \              ['percent'], 
-    \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-    \ },
-    \ 'inactive': {
-    \   'left':  [ [ 'filename' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \              [ 'percent' ] ] 
-    \ },
-    \ 'component': {
-    \   'lineinfo': '%l:%-2v',
-    \   'spell': '%{ &spell ? &spelllang : "" }',
-    \   'modified': '%{ &filetype=="help" ? "" : &modified ? "\uf8ea" : &modifiable ? "" : "\uf8ed" }',
-    \ },
-    \ 'component_visible_condition': {
-    \   'readonly': '(&filetype != "help" && &readonly)',
-    \   'modified': '(&filetype != "help" && (&modified || !&modifiable))',
+    \     'left':  [ [ 'mode', 'paste' ],
+    \                [ 'fugitive', 'filename' ] ],
+    \     'right': [ [ 'lineinfo' ], 
+    \                ['percent'], 
+    \                [ 'filetype', 'fileencoding', 'fileformat' ] ]
     \ },
     \ 'component_function': {
-    \   'readonly': 'LightlineReadonly',
-    \   'fugitive': 'LightlineFugitive',
-    \   'fileformat': 'LightlineFileformat',
-    \   'filetype': 'LightlineFiletype',
-    \	'fileencoding': 'LightlineFileencoding'
+    \     'filename':     'LightlineFilename',
+    \     'fileformat':   'LightlineFileformat',
+    \     'filetype':     'LightlineFiletype',
+    \     'fileencoding': 'LightlineFileencoding',
+    \     'mode':         'LightlineMode',
+    \     'lineinfo':     'LightlineLineinfo',
+    \     'percent':      'LightlinePercent',
+    \     'readonly':     'LightlineReadonly',
+    \     'modified':     'LightlineModified',
     \ },
-    \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
-	\ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
-    \ 'tabline': {
-    \   'left':  [ [ 'tabs' ] ],
-    \   'right': [ [ 'close' ] ] 
-    \ },
+    \ 'separator':    { 'left': "\ue0b8", 'right': "\ue0be" },
+    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
     \ 'tab': {
-    \   'active':   [ 'tabnum', 'filename', 'modified' ],
-    \   'inactive': [ 'tabnum', 'filename', 'modified' ] 
+    \     'active':   [ 'tabnum', 'filename', 'modified', 'readonly' ],
+    \     'inactive': [ 'tabnum', 'filename', 'modified', 'readonly' ]
     \ },
-    \ 'tab_component': {},
     \ 'tab_component_function': {
-    \   'modified': 'LightlineTabModified'
+    \     'filename': 'TablineFilename',
+    \     'modified': 'TablineModified',
+    \     'readonly': 'TablineReadonly',
     \ },
-    \ 'tabline_separator': { 'left': "", 'right': "" },
-	\ 'tabline_subseparator': { 'left': "|", 'right': "|" }
+    \ 'tabline_separator':    { 'left': "",  'right': "" },
+    \ 'tabline_subseparator': { 'left': "|", 'right': "|" }
 \ }
-
-function! LightlineReadonly()
-    return &readonly ? '' : ''
-endfunction
 
 function! LightlineFugitive() abort
     if &filetype ==# 'help'
@@ -310,8 +293,24 @@ function! LightlineFugitive() abort
     return ''
 endfunction
 
+function! LightlineModified()
+  return &ft =~ 'help' ? '' : &modified ? "\uf8ea" : ''
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help' && &readonly ? "\ue0a2" : ''
+endfunction
+
+function! LightlineFilename()
+  let fname = expand('%:F')
+  return  fname =~ 'NERD_tree' ? '' :
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
 function! LightlineFileformat()
-  return winwidth(0) > 100 ? &fileformat : ''
+  return winwidth(0) > 80 ? &fileformat : ''
 endfunction
 
 function! LightlineFiletype()
@@ -322,9 +321,40 @@ function! LightlineFileencoding()
   return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
-function! LightlineTabModified(n) abort
-    let winnr = tabpagewinnr(a:n)
-    return gettabwinvar(a:n, winnr, '&modified') ? "\uf8ea" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\uf8ed"
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname =~ 'NERD_tree' ? 'NERDtree' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! LightlineVisible()
+  let fname = expand('%:t')
+  return ! (fname =~ 'NERD_tree')
+endfunction
+
+function! LightlinePercent()
+  return LightlineVisible() ? (100 * line('.') / line('$')) . '%' : ''
+endfunction
+
+function! LightlineLineinfo()
+  return LightlineVisible() ? printf("%d:%-2d", line('.'), col('.')) : ''
+endfunction
+
+function! TablineModified(n)
+  let winnr = tabpagewinnr(a:n)
+  return gettabwinvar(a:n, winnr, '&modified') ? "\uf8ea" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\uf8ed"
+endfunction
+
+function! TablineReadonly(n)
+  let winnr = tabpagewinnr(a:n)
+  return gettabwinvar(a:n, winnr, '&readonly') ? "\ue0a2" : ''
+endfunction
+
+function! TablineFilename(n)
+ let buflist = tabpagebuflist(a:n)
+ let winnr = tabpagewinnr(a:n)
+ let tname = expand('#'.buflist[winnr - 1].':t')
+ return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
 endfunction
 
 " update lightline theme on fly
@@ -332,6 +362,7 @@ augroup LightLineColorscheme
   autocmd!
   autocmd ColorScheme * call s:lightline_update()
 augroup END
+
 function! s:lightline_update()
   if !exists('g:loaded_lightline')
     return
