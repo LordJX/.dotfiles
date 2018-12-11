@@ -245,6 +245,10 @@ let g:lightline = {
     \     'right': [ [ 'position' ], 
     \                [ 'filetype', 'fileencoding' ] ]
     \ },
+    \ 'inactive': {
+    \     'left':  [ [ 'filename' ] ],
+    \     'right': [ [ 'position' ] ]
+    \ },
     \ 'component_function': {
     \     'filename':     'LightlineFilename',
     \     'filetype':     'LightlineFiletype',
@@ -322,7 +326,7 @@ function! LightlineFilename()
 endfunction
 
 function! LightlinePosition()
-  return LightlinePercent() . ' ' . LightlineLineinfo()
+  return LightlineNormalFile() ? LightlinePercent() . ' ' . LightlineLineinfo() : ''
 endfunction
 
 function! LightlinePercent()
@@ -334,15 +338,15 @@ function! LightlineLineinfo()
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
+  return (winwidth(0) > 80) && LightlineNormalFile() ? (&filetype !=# '' ? &filetype : 'N/A') : ''
 endfunction
 
 function! LightlineFileEncodingFormat()
-  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) . '[' . &fileformat . ']' : ''
+  return (winwidth(0) > 80) && LightlineNormalFile() ? (&fenc !=# '' ? &fenc : &enc) . '[' . &fileformat . ']' : ''
 endfunction
 
 function! LightlineFileencoding()
-  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return (winwidth(0) > 80) && LightlineNormalFile() ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 function! LightlineFileformat()
