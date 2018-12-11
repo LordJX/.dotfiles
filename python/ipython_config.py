@@ -6,8 +6,7 @@ def install(name):
 try:
     import pygments_solarized_style
 except ImportError:
-    #install('pygments-solarized-style')
-    print('pygments-solarized-style')
+    install('pygments-solarized-style')
 
 ## The name or class of a Pygments style to use for syntax                      
 #  highlighting:                                                         
