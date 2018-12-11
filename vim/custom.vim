@@ -7,8 +7,8 @@ let NERDTreeDirArrows = 1
 " to remove the ^G before filename
 let g:NERDTreeNodeDelimiter = "\u00a0"
 
-" open NERDTree with <Leader>n 
-noremap <silent> <F3> :NERDTreeToggle<CR>
+" open NERDTree with <Leader>f
+noremap <silent> <Leader>f :NERDTreeToggle<CR>
 " open NERDTree and find the right file
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
