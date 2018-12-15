@@ -34,6 +34,7 @@ set nobackup
 set nowb
 set noswapfile
 
+set viminfo+=n~/.vim/temp/viminfo
 "if has('persistent_undo')
 "  set undodir=~/.vim/temp/undo
 "  set undofile

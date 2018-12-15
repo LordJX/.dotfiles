@@ -13,6 +13,7 @@ rm $HOME/.gitconfig
 rm -rf $HOME/.terminfo
 
 # ------ oh-my-zsh environment ---------------------------------
+rm -rf $HOME/.oh-my-zsh/custom/lib
 rm $HOME/.oh-my-zsh/custom/profile.zsh
 
 # ------ tmux configuration  -----------------------------------

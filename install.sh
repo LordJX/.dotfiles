@@ -3,29 +3,30 @@ set -e
 
 export DOTFILE_HOME="$HOME/.dotfiles"
 
-# ------ oh-my-zsh environment ---------------------------------
-ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
-source $HOME/.oh-my-zsh/custom/profile.zsh
-echo -e "oh-my-zsh Configuration Done!\n"
-
 # ------ install fonts -----------------------------------------
 cp -R $DOTFILE_HOME/fonts/SourceCodePro $HOME/Library/Fonts/
-echo -e "Nerd Fonts Installed!\n"
+echo "Nerd Fonts Installed!\n"
 
 # ------ git configuration -------------------------------------
 ln -s $DOTFILE_HOME/git/gitconfig $HOME/.gitconfig
-echo -e "Git Configuration Done!\n"
+echo "Git Configuration Done!\n"
+
+# ------ oh-my-zsh environment ---------------------------------
+mkdir $HOME/.oh-my-zsh/custom/lib
+ln -s $DOTFILE_HOME/omzsh/history.zsh $HOME/.oh-my-zsh/custom/lib/history.zsh
+ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
+echo "oh-my-zsh Configuration Done!\n"
 
 # ------ iterm2 configuration ----------------------------------
 tic $DOTFILE_HOME/iterm2/xterm-256color-italic.terminfo
 tic $DOTFILE_HOME/iterm2/tmux.terminfo
-echo -e "Xterm-256-intalic Configuration Done!\n"
+echo "Xterm-256-intalic Configuration Done!\n"
 
 # ------ tmux configuration  -----------------------------------
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 ln -s $DOTFILE_HOME/tmux/tmux.conf $HOME/.tmux.conf
-echo -e "Tmux Configuration Done!\n"
+echo "Tmux Configuration Done!\n"
 
 # ------ vim environment ----------------------------------------
 mkdir -p $HOME/.vim/{autoload,vimrcs,custom,temp/undo}
@@ -44,13 +45,13 @@ source ~/.vim/vimrcs/custom.vim
 " > ~/.vim/vimrc
 
 
-echo -e "Vim Configuration Done!\n"
-echo -e "Dotfiles Configuration Installed Successfully!\n "
+echo "Vim Configuration Done!\n"
+echo "Dotfiles Configuration Installed Successfully!\n "
 
 # ------ manual configuration steps required -------------------
-echo -e "Below are some manual configuration steps required:\n"
+echo "Below are some manual configuration steps required:\n"
 
-echo -e "1) Choose the theme and font for iterm2 you like.\n"
+echo "1) Choose the theme and font for iterm2 you like.\n"
 
-echo -e "2) Run vim PlugInstall command to install plugs.\n"
+echo "2) Run vim PlugInstall command to install plugs.\n"
 
