@@ -5,7 +5,7 @@ call plug#begin('~/.vim/custom')
 
 
 
-" ----- Make Sure You Use Single Quotes 
+" ----- Make Sure You Use Single Quotes
 
 " solarized theme, https://github.com/altercation/solarized
 Plug 'altercation/vim-colors-solarized'
@@ -24,6 +24,15 @@ Plug 'scrooloose/nerdtree'
 
 " surround, https://github.com/tpope/vim-surround
 Plug 'tpope/vim-surround'
+
+" vim tmux navigator, https://github.com/christoomey/vim-tmux-navigator
+Plug 'christoomey/vim-tmux-navigator'
+
+" vim-tmux-focus-events, https://github.com/tmux-plugins/vim-tmux-focus-events
+Plug 'tmux-plugins/vim-tmux-focus-events'
+
+" vimux, https://github.com/benmills/vimux
+Plug 'benmills/vimux'
 
 
 

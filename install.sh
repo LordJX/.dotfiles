@@ -3,6 +3,11 @@ set -e
 
 export DOTFILE_HOME="$HOME/.dotfiles"
 
+# ------ oh-my-zsh environment ---------------------------------
+ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
+source $HOME/.oh-my-zsh/custom/profile.zsh
+echo -e "oh-my-zsh Configuration Done!\n"
+
 # ------ install fonts -----------------------------------------
 cp -R $DOTFILE_HOME/fonts/SourceCodePro $HOME/Library/Fonts/
 echo -e "Nerd Fonts Installed!\n"
@@ -16,11 +21,9 @@ tic $DOTFILE_HOME/iterm2/xterm-256color-italic.terminfo
 tic $DOTFILE_HOME/iterm2/tmux.terminfo
 echo -e "Xterm-256-intalic Configuration Done!\n"
 
-# ------ oh-my-zsh environment ---------------------------------
-ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
-echo -e "oh-my-zsh Configuration Done!\n"
-
 # ------ tmux configuration  -----------------------------------
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 ln -s $DOTFILE_HOME/tmux/tmux.conf $HOME/.tmux.conf
 echo -e "Tmux Configuration Done!\n"
 
@@ -41,7 +44,7 @@ source ~/.vim/vimrcs/custom.vim
 " > ~/.vim/vimrc
 
 
-echo -e "Vim Configuration Done!\n" 
+echo -e "Vim Configuration Done!\n"
 echo -e "Dotfiles Configuration Installed Successfully!\n "
 
 # ------ manual configuration steps required -------------------

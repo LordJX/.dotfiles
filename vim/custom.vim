@@ -7,10 +7,8 @@ let NERDTreeDirArrows = 1
 " to remove the ^G before filename
 let g:NERDTreeNodeDelimiter = "\u00a0"
 
-" open NERDTree with <Leader>f
-noremap <silent> <Leader>f :NERDTreeToggle<CR>
-" open NERDTree and find the right file
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+" open NERDTree with <leader>f
+noremap <silent> <leader>f :NERDTreeToggle<CR>
 
 " open a NERDTree automatically when no files were specified
 autocmd StdinReadPre * let s:std_in=1
@@ -26,3 +24,26 @@ let NERDTreeQuitOnOpen = 1
 " automatically delete the file you just deleted with NerdTree
 let NERDTreeAutoDeleteBuffer = 1
 
+
+" ----- Vimux Configuration ------------------------------------
+
+let g:VimuxHeight = "20"
+let g:VimuxOrientation = "v"
+
+" Prompt for a command to run
+map <leader>vp :VimuxPromptCommand<CR>
+
+" Run last command executed by VimuxRunCommand
+map <leader>vl :VimuxRunLastCommand<CR>
+
+" Inspect runner pane
+map <leader>vi :VimuxInspectRunner<CR>
+
+" Zoom the tmux runner pane
+map <leader>vz :VimuxZoomRunner<CR>
+
+" Close vim tmux runner opened by VimuxRunCommand
+map <leader>vq :VimuxCloseRunner<CR>
+
+" Interrupt any command running in the runner pane
+map <Leader>vx :VimuxInterruptRunner<CR>
