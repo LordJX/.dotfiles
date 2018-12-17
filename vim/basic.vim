@@ -111,7 +111,7 @@ syntax enable
 
 " Set vim color scheme
 try
-  colorscheme solarized
+  colorscheme gruvbox
 endtry
 
 " Enable italicised comments in vim
@@ -241,7 +241,7 @@ set noshowmode
 
 " Enable and setup lightline
 let g:lightline = {
-    \ 'colorscheme': 'solarized',
+    \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \     'left':  [ [ 'mode', 'paste' ],
     \                [ 'fugitive', 'filename' ] ],

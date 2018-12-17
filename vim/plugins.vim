@@ -31,9 +31,6 @@ Plug 'christoomey/vim-tmux-navigator'
 " vim-tmux-focus-events, https://github.com/tmux-plugins/vim-tmux-focus-events
 Plug 'tmux-plugins/vim-tmux-focus-events'
 
-" vimux, https://github.com/benmills/vimux
-Plug 'benmills/vimux'
-
 
 
 " Initialize plugin system

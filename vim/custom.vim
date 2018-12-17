@@ -25,25 +25,3 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeAutoDeleteBuffer = 1
 
 
-" ----- Vimux Configuration ------------------------------------
-
-let g:VimuxHeight = "20"
-let g:VimuxOrientation = "v"
-
-" Prompt for a command to run
-map <leader>vp :VimuxPromptCommand<CR>
-
-" Run last command executed by VimuxRunCommand
-map <leader>vl :VimuxRunLastCommand<CR>
-
-" Inspect runner pane
-map <leader>vi :VimuxInspectRunner<CR>
-
-" Zoom the tmux runner pane
-map <leader>vz :VimuxZoomRunner<CR>
-
-" Close vim tmux runner opened by VimuxRunCommand
-map <leader>vq :VimuxCloseRunner<CR>
-
-" Interrupt any command running in the runner pane
-map <Leader>vx :VimuxInterruptRunner<CR>
