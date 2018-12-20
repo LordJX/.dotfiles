@@ -20,14 +20,14 @@ alias ssh="TERM=xterm-256color ssh"
 # ----- shadowsocks proxy functions in terminal environment
 
 # enable shadowsocks proxy
-function ssproxyon()  { 
+function ssproxyon()  {
     export http_proxy=127.0.0.1:1087
     export https_proxy=127.0.0.1:1087
 }
 # disable shadowsocks proxy
-function ssproxyoff() { 
-    unset  http_proxy 
-    unset  https_proxy 
+function ssproxyoff() {
+    unset  http_proxy
+    unset  https_proxy
 }
 
 
@@ -95,8 +95,10 @@ function pyvenvwrapper_initialize {
     if command -v python3 &>/dev/null; then
         export PYVENV_HOME="$HOME/.pyvenvs"
         [[ -d $PYVENV_HOME ]] || mkdir $PYVENV_HOME
-        
+
         pyvenv_tab_completion
+    else
+        unset -f wkpyvenv mkpyvenv rmpyvenv lspyvenv
     fi
 }
 # Invoke the initialization functions
