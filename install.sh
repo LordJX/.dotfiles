@@ -15,7 +15,6 @@ echo "Git Configuration Done!\n"
 mkdir $HOME/.oh-my-zsh/custom/lib
 ln -s $DOTFILE_HOME/omzsh/history.zsh $HOME/.oh-my-zsh/custom/lib/history.zsh
 ln -s $DOTFILE_HOME/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
-echo "compinit -d $ZSH/cache/zcompdump" >> $HOME/.zshrc
 echo "oh-my-zsh Configuration Done!\n"
 
 # ------ iterm2 configuration ----------------------------------
