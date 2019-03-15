@@ -19,9 +19,6 @@ Plug 'itchyny/lightline.vim'
 " fugitive, https://github.com/tpope/vim-fugitive.git
 Plug 'tpope/vim-fugitive'
 
-" nerdtree, https://github.com/scrooloose/nerdtree
-Plug 'scrooloose/nerdtree'
-
 " surround, https://github.com/tpope/vim-surround
 Plug 'tpope/vim-surround'
 

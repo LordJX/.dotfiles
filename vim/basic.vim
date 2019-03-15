@@ -1,96 +1,76 @@
-
-" ------------------------------------------------------------
-" General
-" ------------------------------------------------------------
-
-" Sets how many lines of history VIM has to remember
+" sets how many lines of history vim has to remember
 set history=500
 
-" Enable filetype plugins
+" enable filetype plugins
 filetype plugin on
 filetype indent on
 
-" Set to auto read when a file is changed from the outside
+" set to auto read when a file is changed from the outside
 set autoread
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
+" set ',' as the <leader> key
 let mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
-" :W sudo saves the file
-command W w !sudo tee % > /dev/null
-
-" Set utf8 as standard encoding and en_US as the standard language
+" set utf8 as standard encoding
 set encoding=utf8
 
-" Use Unix as the standard file type
+" use unix as the standard file type
 set ffs=unix,dos,mac
 
-" Turn backup off, since most stuff is in git, git et.c anyway...
+" turn backup off, since most stuff is in git
 set nobackup
 set nowb
 set noswapfile
 
+" locate the viminfo file to vim temp directory
 set viminfo+=n~/.vim/temp/viminfo
-"if has('persistent_undo')
-"  set undodir=~/.vim/temp/undo
-"  set undofile
-"endif
 
+" enable undo even file closed
+if has('persistent_undo')
+  set undodir=~/.vim/temp/undo
+  set undofile
+endif
 
-" ------------------------------------------------------------
-" User interface
-" ------------------------------------------------------------
-
-" Set 7 lines to the cursor - when moving vertically using j/k
+" set head/foot scroll margin to 7 lines
 set scrolloff=7
 
-" Turn on the Wild menu
-set wildmenu
-
-"Always show current position
-set ruler
-
-" Height of the command bar
+" height of the command bar
 set cmdheight=2
 
-" A buffer becomes hidden when it is abandoned
-set hidden
+" Add a bit extra margin to the left
+"set foldcolumn=1
 
-" Configure backspace so it acts as it should act
+" turn on the wild menu
+set wildmenu
+
+" always show current position
+set ruler
+
+" configure backspace so it acts as it should act
 set backspace=eol,start,indent
 
-" Wrap left and right
+" wrap left and right
 set whichwrap+=<,>,h,l
 
-" Ignore case when searching
+" ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases
+" when searching try to be smart about cases
 set smartcase
 
-" Highlight search results
+" highlight search results
 set hlsearch
 
-" Makes search act like search in modern browsers
+" makes search act like search in modern browsers
 set incsearch
 
-" Don't redraw while executing macros (good performance config)
-set lazyredraw
-
-" For regular expressions turn magic on
-set magic
-
-" Show matching brackets when text indicator is over them
+" show matching brackets when text indicator is over them
 set showmatch
 
-" How many tenths of a second to blink when matching brackets
+" how many tenths of a second to blink when matching brackets
 set mat=2
 
-" Show absolute/relative line number
+" show absolute/relative line number
 set number relativenumber
 augroup numbertoggle
     autocmd!
@@ -98,117 +78,106 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-" Add a bit extra margin to the left
-"set foldcolumn=1
+" enable italicised comments in vim
+"autocmd ColorScheme * highlight Comment cterm=italic
 
-
-" ------------------------------------------------------------
-" Colors and Fonts
-" ------------------------------------------------------------
-
-" Enable syntax highlighting
+" enable syntax highlighting
 syntax enable
 
-" Set vim color scheme
+" set vim color scheme
 try
   colorscheme gruvbox
 endtry
 
-" Enable italicised comments in vim
-"autocmd ColorScheme * highlight Comment cterm=italic
-
+" set vim background theme
 set background=dark
 
-" toggle background and update lightline color scheme
-function! ToggleBackground()
-  let &background = ( &background == "dark"? "light" : "dark" )
-  if exists("g:colors_name")
-    exe "colorscheme " . g:colors_name
-  endif
-endfunction
-
-" map F2 to ToggleBackground() function
-map <F2> :call ToggleBackground()<CR>
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-  set guioptions-=T
-  set guioptions-=e
-  set t_Co=256
-  set guitablabel=%M\ %t
-endif
-
-
-" -------------------------------------------------------------
-" Text, tab and indent related
-" -------------------------------------------------------------
-
-" Use spaces instead of tabs
+" use spaces instead of tabs
 set expandtab
 
-" Be smart when using tabs ;)
+" be smart when using tabs ;)
 set smarttab
 
 " 1 tab == 2 spaces
 set shiftwidth=2
 set tabstop=2
 
-" Linebreak on 500 characters
+" linebreak on 500 characters
 set linebreak
 set textwidth=500
 
+" set indent behavia
 set autoindent  "Auto indent
 set smartindent "Smart indent
 set wrap        "Wrap lines
 
+" no annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
 
-" -------------------------------------------------------------
-" Visual mode related
-" -------------------------------------------------------------
+" set timeoutlen to 500
+set timeoutlen=500
 
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+" don't redraw while executing macros (good performance config)
+set lazyredraw
 
+" for regular expressions turn magic on
+set magic
 
-" -------------------------------------------------------------
-" Moving around, tabs, windows and buffers
-" -------------------------------------------------------------
-" Map <Space> to / (search)
-map <Space> /
-
-" Disable highlight when <leader><cr> is pressed
+" disable highlight when <leader><cr> is pressed
 noremap <silent> <leader><cr> :noh<cr>
 
-" Smart way to move between windows
+" fast saving
+nmap <leader>w :w!<cr>
+
+" :W sudo saves the file
+command W w !sudo tee % > /dev/null
+
+" open file explorer when <leader>e is pressed
+noremap <silent> <leader>f :E<cr>
+
+" disable arrow key, use hjkl instead
+map <Left>  <Nop>
+map <Right> <Nop>
+map <Up>    <Nop>
+map <Down>  <Nop>
+
+" enable jk to exit insert mode
+imap jk <Esc>
+
+" map F2 to ToggleBackground() function
+map <F2> :call ToggleBackground()<CR>
+
+" quickly open a buffer for scribble
+map <leader>q :e ~/buffer<cr>
+
+" quickly open a markdown buffer for scribble
+map <leader>x :e ~/buffer.md<cr>
+
+" a buffer becomes hidden when it is abandoned
+set hidden
+
+" smart way to move between windows
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-" vv to generate new vertical split
-nnoremap <silent> vv <C-w>v
+
 " open new split panes to right and bottom
 set splitbelow
 set splitright
 
-" close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
-" close all the buffers
-map <leader>ba :bufdo bd<cr>
-" navigate between buffers
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+" useful mappings for managing tabs
+map <silent> <leader>tt :tabnew<cr>
+map <silent> <leader>to :tabonly<cr>
+map <silent> <leader>tc :tabclose<cr>
+map <silent> <leader>tm :tabmove<cr>
+map <silent> <leader>tn :tabnext<cr>
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
-" Let 'tl' toggle between this and the last accessed tab
+" let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <leader>tl :exe "tabn ".g:lasttab<CR>
+nmap <silent> <leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 " Opens a new tab with the current buffer's path
@@ -225,8 +194,51 @@ try
 catch
 endtry
 
+
+" ------------------------------------------------------------
+" Function
+" ------------------------------------------------------------
+
+" toggle background and update lightline color scheme
+function! ToggleBackground()
+  let &background = ( &background == "dark"? "light" : "dark" )
+  if exists("g:colors_name")
+    exe "colorscheme " . g:colors_name
+  endif
+endfunction
+
+
+" ------------------------------------------------------------
+" Advanced
+" ------------------------------------------------------------
+
+" visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" remove trailling whitespace on save
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+" ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32") || has("win64")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
 
 
 " -----------------------------------------------------
@@ -306,13 +318,7 @@ function! LightlineReadonly()
 endfunction
 
 function! LightlineMode()
-  let fname = expand('%:t')
-  return fname =~ 'NERD_tree' ? 'NERDtree' : lightline#mode()
-endfunction
-
-function! LightlineNormalFile()
-  let fname = expand('%:t')
-  return ! (fname =~ 'NERD_tree')
+  return lightline#mode()
 endfunction
 
 function! LightlineFilename()
@@ -321,35 +327,34 @@ function! LightlineFilename()
   else
     let fname = expand('%:t')
   endif
-  return !LightlineNormalFile() ? '' :
-        \ winwidth(0) < 60 ? '' :
+  return winwidth(0) < 60 ? '' :
         \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
 function! LightlinePosition()
-  return LightlineNormalFile() ? LightlinePercent() . ' ' . LightlineLineinfo() : ''
+  return LightlinePercent() . ' ' . LightlineLineinfo()
 endfunction
 
 function! LightlinePercent()
-  return LightlineNormalFile() ? printf("%3d%% \uf0c9", 100 * line('.') / line('$')) : ''
+  return printf("%3d%% \uf0c9", 100 * line('.') / line('$'))
 endfunction
 
 function! LightlineLineinfo()
-  return LightlineNormalFile() ? printf("%3d/%-3d \ue0a1 %2d", line('.'), line('$'), col('.')) : ''
+  return printf("%3d/%-3d \ue0a1 %2d", line('.'), line('$'), col('.'))
 endfunction
 
 function! LightlineFiletype()
-  return (winwidth(0) > 80) && LightlineNormalFile() ? (&filetype !=# '' ? &filetype : 'N/A') : ''
+  return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
 endfunction
 
 function! LightlineFileEncodingFormat()
-  return (winwidth(0) > 80) && LightlineNormalFile() ? (&fenc !=# '' ? &fenc : &enc) . '[' . &fileformat . ']' : ''
+  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) . '[' . &fileformat . ']' : ''
 endfunction
 
 function! LightlineFileencoding()
-  return (winwidth(0) > 80) && LightlineNormalFile() ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 function! LightlineFileformat()
@@ -370,7 +375,7 @@ function! TablineFilename(n)
   let buflist = tabpagebuflist(a:n)
   let winnr = tabpagewinnr(a:n)
   let tname = expand('#'.buflist[winnr - 1].':t')
-  return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
+  return tname !=# '' ? tname : '[No Name]'
 endfunction
 
 " update lightline theme on fly
@@ -399,61 +404,3 @@ function! s:lightline_update()
   catch
   endtry
 endfunction
-
-
-" ------------------------------------------------------------
-" Editing mappings
-" ------------------------------------------------------------
-
-" Disable arrow key, use hjkl instead
-map <Left>  <Nop>
-map <Right> <Nop>
-map <Up>    <Nop>
-map <Down>  <Nop>
-
-" Enable jk to exit insert mode
-imap jk <Esc>
-
-" Remove trailling whitespace on save
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-
-" ------------------------------------------------------------
-" Misc
-" ------------------------------------------------------------
-
-" Quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
-" Avoid garbled characters in Chinese language windows OS
-let $LANG='en'
-set langmenu=en
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
-
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32") || has("win64")
-    set wildignore+=.git\*,.hg\*,.svn\*
-else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-endif
-
-" No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
-
