@@ -26,10 +26,10 @@ set noswapfile
 set viminfo+=n~/.vim/temp/viminfo
 
 " enable undo even file closed
-if has('persistent_undo')
-  set undodir=~/.vim/temp/undo
-  set undofile
-endif
+"if has('persistent_undo')
+"  set undodir=~/.vim/temp/undo
+"  set undofile
+"endif
 
 " set head/foot scroll margin to 7 lines
 set scrolloff=7
@@ -82,7 +82,12 @@ augroup END
 syntax enable
 
 " set vim background theme
-set background=light
+set background=dark
+
+" set color scheme
+try
+  colorscheme gruvbox
+endtry
 
 " use spaces instead of tabs
 set expandtab
