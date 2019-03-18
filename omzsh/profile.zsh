@@ -5,14 +5,6 @@
 # set vim as default editor
 export EDITOR="/usr/bin/vim"
 
-# enable italic fonts in terminal
-export TERM=xterm-256color-italic
-alias ssh="TERM=xterm-256color ssh"
-
-# enable GPG for command line
-#export GPG_TTY=/dev/ttys001
-
-
 # -------------------------------------------------------
 # ----- functions -----
 # -------------------------------------------------------

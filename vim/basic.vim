@@ -78,19 +78,11 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-" enable italicised comments in vim
-"autocmd ColorScheme * highlight Comment cterm=italic
-
 " enable syntax highlighting
 syntax enable
 
-" set vim color scheme
-try
-  colorscheme gruvbox
-endtry
-
 " set vim background theme
-set background=dark
+set background=light
 
 " use spaces instead of tabs
 set expandtab
@@ -134,6 +126,9 @@ nmap <leader>w :w!<cr>
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
 
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
 " open file explorer when <leader>e is pressed
 noremap <silent> <leader>f :E<cr>
 
@@ -150,10 +145,10 @@ imap jk <Esc>
 map <F2> :call ToggleBackground()<CR>
 
 " quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
+map <leader>n :e ~/.vim/temp/buffer<cr>
 
 " quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
+map <leader>nm :e ~/.vim/temp/buffer.md<cr>
 
 " a buffer becomes hidden when it is abandoned
 set hidden
@@ -167,45 +162,6 @@ nnoremap <C-H> <C-W><C-H>
 " open new split panes to right and bottom
 set splitbelow
 set splitright
-
-" useful mappings for managing tabs
-map <silent> <leader>tt :tabnew<cr>
-map <silent> <leader>to :tabonly<cr>
-map <silent> <leader>tc :tabclose<cr>
-map <silent> <leader>tm :tabmove<cr>
-map <silent> <leader>tn :tabnext<cr>
-
-" let 'tl' toggle between this and the last accessed tab
-let g:lasttab = 1
-nmap <silent> <leader>tl :exe "tabn ".g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Specify the behavior when switching between buffers
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
-
-
-" ------------------------------------------------------------
-" Function
-" ------------------------------------------------------------
-
-" toggle background and update lightline color scheme
-function! ToggleBackground()
-  let &background = ( &background == "dark"? "light" : "dark" )
-  if exists("g:colors_name")
-    exe "colorscheme " . g:colors_name
-  endif
-endfunction
 
 
 " ------------------------------------------------------------
@@ -228,179 +184,16 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
 
-" ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32") || has("win64")
-    set wildignore+=.git\*,.hg\*,.svn\*
-else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-endif
+" ------------------------------------------------------------
+" Function
+" ------------------------------------------------------------
 
-
-
-" -----------------------------------------------------
-" Status line
-" -----------------------------------------------------
-
-" Always show the status line
-set laststatus=2
-
-" -- INSERT -- is unnecessary anymore
-set noshowmode
-
-" Enable and setup lightline
-let g:lightline = {
-    \ 'colorscheme': 'gruvbox',
-    \ 'active': {
-    \     'left':  [ [ 'mode', 'paste' ],
-    \                [ 'fugitive', 'filename' ] ],
-    \     'right': [ [ 'position' ],
-    \                [ 'filetype', 'fileencoding' ] ]
-    \ },
-    \ 'inactive': {
-    \     'left':  [ [ 'filename' ] ],
-    \     'right': [ [ 'position' ] ]
-    \ },
-    \ 'component_function': {
-    \     'filename':     'LightlineFilename',
-    \     'filetype':     'LightlineFiletype',
-    \     'fileencoding': 'LightlineFileEncodingFormat',
-    \     'mode':         'LightlineMode',
-    \     'lineinfo':     'LightlineLineinfo',
-    \     'position':     'LightlinePosition',
-    \     'modified':     'LightlineModified',
-    \ },
-    \ 'separator':    { 'left': "\ue0b8", 'right': "\ue0be" },
-    \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
-    \ 'tab': {
-    \     'active':   [ 'tabnum', 'filename', 'modified', 'readonly' ],
-    \     'inactive': [ 'tabnum', 'filename', 'modified', 'readonly' ]
-    \ },
-    \ 'tab_component_function': {
-    \     'filename': 'TablineFilename',
-    \     'modified': 'TablineModified',
-    \     'readonly': 'TablineReadonly',
-    \ },
-    \ 'tabline_separator':    { 'left': "",  'right': "" },
-    \ 'tabline_subseparator': { 'left': "|", 'right': "|" }
-\ }
-
-function! LightlineFugitive() abort
-  if &filetype ==# 'help'
-    return ''
+" toggle background and update lightline color scheme
+function! ToggleBackground()
+  let &background = ( &background == "dark"? "light" : "dark" )
+  if exists("g:colors_name")
+    exe "colorscheme " . g:colors_name
   endif
-  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
-    return b:lightline_fugitive
-  endif
-  try
-    if exists('*fugitive#head')
-      let head = fugitive#head()
-    else
-      return ''
-    endif
-    let b:lightline_fugitive = head !=# '' ? "\ue0a0 ".head : ''
-    let b:lightline_fugitive_ = reltime()
-    return b:lightline_fugitive
-  catch
-  endtry
-  return ''
 endfunction
 
-function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? "\uf8ea" : ''
-endfunction
-
-function! LightlineReadonly()
-  return &ft !~? 'help' && &readonly ? "\ue0a2" : ''
-endfunction
-
-function! LightlineMode()
-  return lightline#mode()
-endfunction
-
-function! LightlineFilename()
-  if winwidth(0) > 100
-    let fname = expand('%:F')
-  else
-    let fname = expand('%:t')
-  endif
-  return winwidth(0) < 60 ? '' :
-        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlinePosition()
-  return LightlinePercent() . ' ' . LightlineLineinfo()
-endfunction
-
-function! LightlinePercent()
-  return printf("%3d%% \uf0c9", 100 * line('.') / line('$'))
-endfunction
-
-function! LightlineLineinfo()
-  return printf("%3d/%-3d \ue0a1 %2d", line('.'), line('$'), col('.'))
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
-endfunction
-
-function! LightlineFileEncodingFormat()
-  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) . '[' . &fileformat . ']' : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 80 ? &fileformat : ''
-endfunction
-
-function! TablineModified(n)
-  let winnr = tabpagewinnr(a:n)
-  return gettabwinvar(a:n, winnr, '&modified') ? "\uf8ea" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\uf8ed"
-endfunction
-
-function! TablineReadonly(n)
-  let winnr = tabpagewinnr(a:n)
-  return gettabwinvar(a:n, winnr, '&readonly') ? "\ue0a2" : ''
-endfunction
-
-function! TablineFilename(n)
-  let buflist = tabpagebuflist(a:n)
-  let winnr = tabpagewinnr(a:n)
-  let tname = expand('#'.buflist[winnr - 1].':t')
-  return tname !=# '' ? tname : '[No Name]'
-endfunction
-
-" update lightline theme on fly
-augroup LightLineColorscheme
-  autocmd!
-  autocmd ColorScheme * call s:lightline_update()
-augroup END
-
-function! s:lightline_update()
-  if !exists('g:loaded_lightline')
-    return
-  endif
-  try
-    if g:colors_name =~# 'solarized\|gruvbox'
-      let g:lightline.colorscheme = substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
-      if g:lightline.colorscheme ==# 'solarized'
-        runtime autoload/lightline/colorscheme/solarized.vim
-      endif
-      if g:lightline.colorscheme ==# 'gruvbox'
-        runtime autoload/lightline/colorscheme/gruvbox.vim
-      endif
-      call lightline#init()
-      call lightline#colorscheme()
-      call lightline#update()
-    endif
-  catch
-  endtry
-endfunction
