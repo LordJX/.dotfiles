@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-SYSTEM_VENDOR=$(sudo dmidecode -s system-manufacture)
+SYSTEM_VENDOR=$(sudo dmidecode -s system-manufacturer)
 DOTFILE_HOME="$HOME/.dotfiles"
 
 # essential package pruge and installation
@@ -50,9 +50,9 @@ sudo cp $DOTFILE_HOME/wps/* /usr/share/fonts/wps-office
 sudo fc-cache -vfs
 
 # system setting for mac only
-if [ $SYSTEM_VENDOR = "Apple Inc." ]; then
+if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   # install xkbset pakcage for key mapping
-  sudo apt-get install xkbset
+  sudo apt-get -y install xkbset
 
   # screen resolution setting
   RES="2000 1250" && \
