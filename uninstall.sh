@@ -1,17 +1,16 @@
 #!/bin/sh
 set -e
 
-export DOTFILE_HOME="$HOME/.dotfiles"
+# recover apt sources.list
+sudo rm /etc/apt/sources.list
+sudo mv /etc/apt/sources.list.orig /etc/apt/sources.list
+sudo apt-get update
 
-# ------ git configuration -------------------------------------
+# git configuration remove
 rm $HOME/.gitconfig
 
-# ------ oh-my-zsh environment ---------------------------------
-rm $HOME/.oh-my-zsh/custom/profile.zsh
-
-# ------ tmux configuration  -----------------------------------
-rm $HOME/.tmux.conf
-rm -rf $HOME/.tmux
-
-# ------ vim environment ----------------------------------------
+# vim configuration remove
 rm -rf $HOME/.vim
+
+# screen resolution setting remove
+rm $HOME/.xprofile

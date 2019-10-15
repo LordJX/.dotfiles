@@ -82,12 +82,12 @@ augroup END
 syntax enable
 
 " set vim background theme
-set background=dark
+"set background=dark
 
 " set color scheme
-try
-  colorscheme gruvbox
-endtry
+"try
+"  colorscheme gruvbox
+"endtry
 
 " use spaces instead of tabs
 set expandtab
