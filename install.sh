@@ -62,7 +62,7 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   MODERES=$(echo $MODELINE | grep -o -P '(?<=").*(?=")') && \
   echo "#!/bin/sh" >> $HOME/.xprofile
   echo "xrandr --newmode $MODELINE" >> $HOME/.xprofile
-  echo "xrandr --addmode $DISP $MODERES" $HOME/.xprofile
+  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.xprofile
 
   # keyboard setting: swap cmd and alt keys
   echo options hid_apple swap_opt_cmd=1 | sudo tee -a /etc/modprobe.d/hid_apple.conf
@@ -82,6 +82,6 @@ echo "----- ubuntu installation post configuration work done! -----"
 
 # install oh my zsh
 # sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# ln -s $HOME/Workspace/dotfiles/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
-# ln -s $HOME/Workspace/dotfiles/omzsh/134key.zsh $HOME/.oh-my-zsh/custom/134key.zsh
+# ln -s $HOME/.dotfiles/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
+# ln -s $HOME/.dotfiles/omzsh/134key.zsh $HOME/.oh-my-zsh/custom/134key.zsh
 
