@@ -73,11 +73,10 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   # power management tunning
   sudo cp $DOTFILE_HOME/pm/lid_wakeup_disable /lib/systemd/system-sleep/lid_wakeup_disable
   sudo cp $DOTFILE_HOME/pm/network_hack_hibernation /lib/systemd/system-sleep/network_hack_hibernation
-
-  # disable Wayland and use Xorg as GUI manager
-  sudo sed -i '/WaylandEnable=false/s/^#//g' /etc/gdm3/custom.conf
 fi
 
+# disable Wayland and use Xorg as GUI manager
+sudo sed -i '/WaylandEnable=false/s/^#//g' /etc/gdm3/custom.conf
 echo "----- ubuntu installation post configuration work done! -----"
 
 # install oh my zsh
