@@ -54,7 +54,7 @@ sudo apt-get install --no-install-recommends \
     network-manager network-manager-openconnect plasma-nm \
     pulseaudio plasma-pa \
     bluez pulseaudio-module-bluetooth bluedevil \
-    fcitx fcitx-googlepinyin im-config kde-config-fcitx fcitx-frontend-qt5 fcitx-ui-classic
+    fcitx fcitx-googlepinyin im-config kde-config-fcitx fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt5 fcitx-ui-classic
 
 sudo apt-get purge vim-common vim-tiny
 
