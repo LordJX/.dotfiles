@@ -1,0 +1,11 @@
+[user]
+  name = Jason Xu
+  email = hongyi.xu@gmail.com
+
+[core]
+  # Use custom .gitignore
+  excludesfile = ~/.git/gitignore
+
+  # User vim as the default editor
+  editor = /usr/bin/vim
+
