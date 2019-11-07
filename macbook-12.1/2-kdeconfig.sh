@@ -47,20 +47,16 @@ sudo apt-get install --no-install-recommends \
 	kwin-x11 sddm haveged libpam-systemd desktop-base kdeconnect
 
 # fonts configration depended on fonts-noto package
-sudo cp ../fonts/* /usr/share/fontconfig/conf.avail/
+sudo cp ../common/fonts/* /usr/share/fontconfig/conf.avail/
 
 # install essential packages
+sudo apt-get purge vim-common vim-tiny
 sudo apt-get install --no-install-recommends \
+    zsh vim git curl ca-certificates \
     network-manager network-manager-openconnect plasma-nm \
     pulseaudio plasma-pa \
     bluez pulseaudio-module-bluetooth bluedevil \
-    fcitx fcitx-googlepinyin im-config kde-config-fcitx fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt5 fcitx-ui-classic
-
-sudo apt-get purge vim-common vim-tiny
-
-sudo apt-get install --no-install-recommends \
-    zsh git curl ca-certificates \
-    chromium chromium-sandbox \
-    mpv
+    fcitx fcitx-googlepinyin im-config kde-config-fcitx fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt5 fcitx-ui-classic \
+    chromium chromium-sandbox mpv
 
 sudo apt-get autoremove
