@@ -1,18 +1,17 @@
 #!/bin/sh
 set -e
 
-SYSTEM_VENDOR=$(sudo dmidecode -s system-manufacturer)
 DOTFILE_HOME="$HOME/.dotfiles"
+SYSTEM_VENDOR=$(sudo dmidecode -s system-manufacturer)
 
 # git configuration
-ln -s $DOTFILE_HOME/common/git $HOME/.git
-ln -s $HOME/.git/gitconfig $HOME/.gitconfig
+ln -s $DOTFILE_HOME/git/gitconfig $HOME/.gitconfig
 
 # vim environment configuration
 mkdir -p $HOME/.vim/autoload
 mkdir -p $HOME/.vim/custom
 mkdir -p $HOME/.vim/temp/undo
-ln -s $DOTFILE_HOME/common/vim $HOME/.vim/vimrcs
+ln -s $DOTFILE_HOME/vim $HOME/.vim/vimrcs
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 cat > $HOME/.vim/vimrc << _EOF
@@ -63,12 +62,28 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   sudo update-initramfs -u -k all
 
   # power management tunning
-  #sudo cp $DOTFILE_HOME/macbook-12.1/pm/lid_wakeup_disable /lib/systemd/system-sleep/lid_wakeup_disable
-  #sudo cp $DOTFILE_HOME/macbook-12.1/pm/network_hack_hibernation /lib/systemd/system-sleep/network_hack_hibernation
+  #sudo cp $DOTFILE_HOME/pm/lid_wakeup_disable /lib/systemd/system-sleep/lid_wakeup_disable
+  #sudo cp $DOTFILE_HOME/pm/network_hack_hibernation /lib/systemd/system-sleep/network_hack_hibernation
 fi
+
+# install google chrome
+#wget -O $HOME/Downloads/google-chrome.deb \
+#    https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#sudo dpkg -i $HOME/Downloads/google-chrome.deb
+#rm $HOME/Downloads/google-chrome.deb
+
+# install video player mpv
+#sudo apt-get -y install --no-install-recommends mpv
+
+# wps installation
+#wget -O $HOME/Downloads/wps-office.deb \
+#    http://kdl.cc.ksosoft.com/wps-community/download/8865/wps-office_11.1.0.8865_amd64.deb
+#sudo dpkg -i $HOME/Downloads/wps-office.deb
+#rm $HOME/Downloads/wps-office.deb
+#sudo cp $DOTFILE_HOME/wps/* /usr/share/fonts/wps-office
+#sudo fc-cache -vfs
 
 # install oh my zsh
 # sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# ln -s $HOME/.dotfiles/common/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
-# ln -s $HOME/.dotfiles/common/omzsh/134key.zsh $HOME/.oh-my-zsh/custom/134key.zsh
-
+# ln -s $HOME/.dotfiles/omzsh/profile.zsh $HOME/.oh-my-zsh/custom/profile.zsh
+# ln -s $HOME/.dotfiles/omzsh/134key.zsh $HOME/.oh-my-zsh/custom/134key.zsh
