@@ -1,7 +1,6 @@
 #!/bin/sh
 set -e
 
-SYSTEM_VENDOR=$(sudo dmidecode -s system-manufacturer)
 DOTFILE_HOME="$HOME/.dotfiles"
 
 # git configuration

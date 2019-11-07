@@ -2,9 +2,9 @@
 set -e
 
 # connect to wifi
-sudo ip link set wlp2s0 up
-sudo su -c 'wpa_supplicant -B -i wlp2s0 -c <(wpa_passphrase UNICORN joy@0825)'
-sudo dhclient wlp2s0
+#sudo ip link set wlp2s0 up
+#sudo su -c 'wpa_supplicant -B -i wlp2s0 -c <(wpa_passphrase UNICORN joy@0825)'
+#sudo dhclient wlp2s0
 
 # disable bluetooth sap plugin
 sudo sed -i '/ExecStart=/s/$/ --noplugin=sap/' /lib/systemd/system/bluetooth.service
