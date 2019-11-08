@@ -3,8 +3,10 @@ set -e
 
 if [ "${1}" = "dell" ]; then
   wificard="wlp2s0"
+  swapsize="16G"
 elif [ "${1}" = "macbook" ]; then
   wificard="wlp3s0"
+  swapsize="8G"
 else
   echo "Wrong usage.  Please input dell/macbook as argument. "
   exit -1
@@ -15,14 +17,14 @@ sudo ip link set ${wificard} up
 sudo su -c "wpa_supplicant -B -i ${wificard} -c <(wpa_passphrase UNICORN joy@0825)"
 sudo dhclient ${wificard}
 
-## set locale
+# set locale
 echo 'zh_CN.UTF-8 UTF-8' | sudo tee -a /etc/locale.gen
 sudo locale-gen
 echo LANG=en_US.UTF-8 | sudo tee -a /etc/locale.conf
 export LANG=en_US.UTF-8
 
 # create swap file
-sudo fallocate -l 16G /swapfile
+sudo fallocate -l ${swapsize} /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
@@ -40,9 +42,7 @@ sudo apt-get install --no-install-recommends \
 # install plasma desktop
 sudo apt-get install --no-install-recommends \
     dolphin kimageformat-plugins kdialog kio-extras konsole \
-    \
-    plasma-desktop bluedevil fonts-hack fonts-noto fonts-noto-cjk \
-    breeze-gtk-theme kde-config-gtk-style kde-config-gtk-style-preview kde-config-screenlocker \
+    \ plasma-desktop bluedevil fonts-hack fonts-noto fonts-noto-cjk \ breeze-gtk-theme kde-config-gtk-style kde-config-gtk-style-preview kde-config-screenlocker \
     kde-config-sddm kde-style-oxygen-qt5 kgamma5 khelpcenter man-db khotkeys kinfocenter \
     kio kio-extras kmenuedit kscreen ksshaskpass ksysguard kwin-x11 \
     libpam-kwallet5 plasma-pa powerdevil systemsettings user-manager \
@@ -65,5 +65,5 @@ sudo apt-get install --no-install-recommends \
     network-manager network-manager-openconnect plasma-nm \
     pulseaudio plasma-pa \
     bluez pulseaudio-module-bluetooth bluedevil \
-    fcitx fcitx-googlepinyin im-config kde-config-fcitx fcitx-frontend-gt2 fctix-frontend-gtk3 fcitx-frontend-qt5 fcitx-ui-classic
+    fcitx fcitx-googlepinyin im-config kde-config-fcitx fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt5 fcitx-ui-classic
 sudo apt-get autoremove
