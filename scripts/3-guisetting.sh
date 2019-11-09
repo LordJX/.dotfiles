@@ -31,9 +31,9 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   DISP=$(xrandr | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/") && \
   MODELINE=$(cvt $(echo $RES $RATE) | grep -e "Modeline [^(]" | sed -r 's/.*Modeline (.*)/\1/') && \
   MODERES=$(echo $MODELINE | grep -o -P '(?<=").*(?=")') && \
-  echo "#!/bin/sh" >> $HOME/.xprofile
-  echo "xrandr --newmode $MODELINE" >> $HOME/.xprofile
-  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.xprofile
+  echo "#!/bin/sh" >> $HOME/.zprofile
+  echo "xrandr --newmode $MODELINE" >> $HOME/.zprofile
+  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.zprofile
 
   # screen resolution setting
   RES="1760 1100" && \
@@ -41,9 +41,9 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   DISP=$(xrandr | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/") && \
   MODELINE=$(cvt $(echo $RES $RATE) | grep -e "Modeline [^(]" | sed -r 's/.*Modeline (.*)/\1/') && \
   MODERES=$(echo $MODELINE | grep -o -P '(?<=").*(?=")') && \
-  echo " " >> $HOME/.xprofile
-  echo "xrandr --newmode $MODELINE" >> $HOME/.xprofile
-  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.xprofile
+  echo " " >> $HOME/.zprofile
+  echo "xrandr --newmode $MODELINE" >> $HOME/.zprofile
+  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.zprofile
 
   # screen resolution setting
   RES="1600 1000" && \
@@ -51,9 +51,9 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   DISP=$(xrandr | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/") && \
   MODELINE=$(cvt $(echo $RES $RATE) | grep -e "Modeline [^(]" | sed -r 's/.*Modeline (.*)/\1/') && \
   MODERES=$(echo $MODELINE | grep -o -P '(?<=").*(?=")') && \
-  echo " " >> $HOME/.xprofile
-  echo "xrandr --newmode $MODELINE" >> $HOME/.xprofile
-  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.xprofile
+  echo " " >> $HOME/.zprofile
+  echo "xrandr --newmode $MODELINE" >> $HOME/.zprofile
+  echo "xrandr --addmode $DISP $MODERES" >> $HOME/.zprofile
 
   # keyboard setting: swap cmd and alt keys
   echo options hid_apple swap_opt_cmd=1 | sudo tee -a /etc/modprobe.d/hid_apple.conf
