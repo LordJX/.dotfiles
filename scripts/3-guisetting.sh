@@ -41,7 +41,7 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   DISP=$(xrandr | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/") && \
   MODELINE=$(cvt $(echo $RES $RATE) | grep -e "Modeline [^(]" | sed -r 's/.*Modeline (.*)/\1/') && \
   MODERES=$(echo $MODELINE | grep -o -P '(?<=").*(?=")') && \
-  echo "#!/bin/sh" >> $HOME/.xprofile
+  echo " " >> $HOME/.xprofile
   echo "xrandr --newmode $MODELINE" >> $HOME/.xprofile
   echo "xrandr --addmode $DISP $MODERES" >> $HOME/.xprofile
 
@@ -51,7 +51,7 @@ if [ "$SYSTEM_VENDOR" = "Apple Inc." ]; then
   DISP=$(xrandr | grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/") && \
   MODELINE=$(cvt $(echo $RES $RATE) | grep -e "Modeline [^(]" | sed -r 's/.*Modeline (.*)/\1/') && \
   MODERES=$(echo $MODELINE | grep -o -P '(?<=").*(?=")') && \
-  echo "#!/bin/sh" >> $HOME/.xprofile
+  echo " " >> $HOME/.xprofile
   echo "xrandr --newmode $MODELINE" >> $HOME/.xprofile
   echo "xrandr --addmode $DISP $MODERES" >> $HOME/.xprofile
 

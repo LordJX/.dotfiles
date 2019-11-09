@@ -42,7 +42,9 @@ sudo apt-get install --no-install-recommends \
 # install plasma desktop
 sudo apt-get install --no-install-recommends \
     dolphin kimageformat-plugins kdialog kio-extras konsole \
-    \ plasma-desktop bluedevil fonts-hack fonts-noto fonts-noto-cjk \ breeze-gtk-theme kde-config-gtk-style kde-config-gtk-style-preview kde-config-screenlocker \
+    \
+    plasma-desktop bluedevil fonts-hack fonts-noto fonts-noto-cjk \
+    breeze-gtk-theme kde-config-gtk-style kde-config-gtk-style-preview kde-config-screenlocker \
     kde-config-sddm kde-style-oxygen-qt5 kgamma5 khelpcenter man-db khotkeys kinfocenter \
     kio kio-extras kmenuedit kscreen ksshaskpass ksysguard kwin-x11 \
     libpam-kwallet5 plasma-pa powerdevil systemsettings user-manager \
